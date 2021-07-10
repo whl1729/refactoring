@@ -14,16 +14,24 @@ function createTestData() {
   return result;
 }
 
+function test(someStatement) {
+  const data = createTestData();
+
+  for (const invoice of data.invoices) {
+    let actualResult = someStatement(invoice, data.plays);
+    let expectedPath = data.results[invoice["customer"]][someStatement.name];
+    let expectedResult = fs.readFileSync(expectedPath);
+    assert.equal(actualResult, expectedResult);
+  }
+}
+
 describe('statement', function() {
   it("the statement result should match the result.json", function() {
-    const data = createTestData();
+    test(statement);
+  });
 
-    for (const invoice of data.invoices) {
-      let actualResult = statement(invoice, data.plays);
-      let expectedPath = data.results[invoice["customer"]]["statement"]
-      let expectedResult = fs.readFileSync(expectedPath)
-      assert.equal(actualResult, expectedResult);
-    }
+  it("the html statement result should match the result.json", function() {
+    test(htmlStatement);
   });
 });
 
