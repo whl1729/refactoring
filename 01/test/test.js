@@ -2,20 +2,26 @@ const fs = require('fs');
 const assert = require('assert');
 const { statement, htmlStatement } = require('../statement.js')
 
+function parseJsonFile(path) {
+  return JSON.parse(fs.readFileSync(path));
+}
+
+function createTestData() {
+  const result = {};
+  result.invoices = parseJsonFile('./data/invoices.json');
+  result.plays = parseJsonFile('./data/plays.json');
+  result.results = parseJsonFile('./data/results.json');
+  return result;
+}
+
 describe('statement', function() {
-  it("the statement result should be corresponding to the result.json", function() {
-    let jsonString = fs.readFileSync('./data/invoices.json')
-    const invoices = JSON.parse(jsonString)
+  it("the statement result should match the result.json", function() {
+    const data = createTestData();
 
-    jsonString = fs.readFileSync('./data/plays.json')
-    const plays = JSON.parse(jsonString)
-
-    jsonString = fs.readFileSync('./data/results.json')
-    const results = JSON.parse(jsonString)
-
-    for (const invoice of invoices) {
-      let actualResult = statement(invoice, plays);
-      let expectedResult = fs.readFileSync(results[invoice["customer"]]["statement"])
+    for (const invoice of data.invoices) {
+      let actualResult = statement(invoice, data.plays);
+      let expectedPath = data.results[invoice["customer"]]["statement"]
+      let expectedResult = fs.readFileSync(expectedPath)
       assert.equal(actualResult, expectedResult);
     }
   });

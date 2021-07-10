@@ -1,5 +1,6 @@
 {
     "BigCo": {
-        "statement": "./data/bigco.txt"
+        "statement": "./data/bigco.txt",
+        "htmlStatement": "./data/bigco.html"
     }
 }
