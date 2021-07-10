@@ -1,6 +1,6 @@
 const fs = require('fs');
 const assert = require('assert');
-const statement = require('../statement.js')
+const { statement, htmlStatement } = require('../statement.js')
 
 describe('statement', function() {
   it("the statement result should be corresponding to the result.json", function() {

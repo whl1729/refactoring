@@ -1,5 +1,5 @@
 const fs = require('fs');
-const statement = require('./statement.js');
+const { statement, htmlStatement } = require('./statement.js');
 
 function main() {
   let jsonString = fs.readFileSync('./data/invoices.json');
@@ -10,6 +10,9 @@ function main() {
 
   for (const invoice of invoices) {
     let result = statement(invoice, plays);
+    console.log(result);
+
+    result = htmlStatement(invoice, plays);
     console.log(result);
   }
 }
