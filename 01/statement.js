@@ -13,15 +13,17 @@ function statement(invoice, plays) {
     // add volume credits
     volumeCredits += Math.max(perf.audience - 30, 0);
     // add extra credit for every ten comedy attendees
-    if ("comedy" === playFor(perf).type) volumeCredits += Math.floor(perf.audience / 5);
+    if ('comedy' === playFor(perf).type)
+      volumeCredits += Math.floor(perf.audience / 5);
 
 
     // print line for this order
-    result += `  ${playFor(perf).name}: ${format(amountFor(perf)/100)} (${perf.audience} seats)\n`;
+    result += `  ${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${
+        perf.audience} seats)\n`;
     totalAmount += amountFor(perf);
   }
 
-  result += `Amount owned is ${format(totalAmount/100)}\n`;
+  result += `Amount owned is ${format(totalAmount / 100)}\n`;
   result += `You earned ${volumeCredits} credits\n`;
   return result;
 
@@ -29,13 +31,13 @@ function statement(invoice, plays) {
     let result = 0;
 
     switch (playFor(aPerformance).type) {
-      case "tragedy":
+      case 'tragedy':
         result = 40000;
         if (aPerformance.audience > 30) {
           result += 1000 * (aPerformance.audience - 30);
         }
         break;
-      case "comedy":
+      case 'comedy':
         result = 30000;
         if (aPerformance.audience > 20) {
           result += 10000 + 500 * (aPerformance.audience - 20);
