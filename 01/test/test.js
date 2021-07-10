@@ -10,12 +10,13 @@ describe('statement', function() {
     jsonString = fs.readFileSync('./data/plays.json')
     const plays = JSON.parse(jsonString)
 
-    jsonString = fs.readFileSync('./data/result.json')
-    const standard = JSON.parse(jsonString)
+    jsonString = fs.readFileSync('./data/results.json')
+    const results = JSON.parse(jsonString)
 
     for (const invoice of invoices) {
-      let result = statement(invoice, plays);
-      assert.equal(result, standard[invoice["customer"]])
+      let actualResult = statement(invoice, plays);
+      let expectedResult = fs.readFileSync(results[invoice["customer"]]["statement"])
+      assert.equal(actualResult, expectedResult);
     }
   });
 });
